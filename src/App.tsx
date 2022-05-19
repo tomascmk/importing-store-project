@@ -1,12 +1,13 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { Layout } from "./components/layout/Layout";
+import { ItemListContainer } from "./components/itemListContainer/ItemListContainer";
 
 function App() {
   return (
     <div className="App">
-      <Layout>Hola como va?</Layout>
+      <Layout>
+        <ItemListContainer greeting="Bienvenidos!" />
+      </Layout>
     </div>
   );
 }
