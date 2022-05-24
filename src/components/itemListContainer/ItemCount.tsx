@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions } from "@mui/material";
+import { Button, ButtonGroup, CardActionArea, CardActions, Tooltip } from "@mui/material";
 import { CandlestickChartOutlined } from "@mui/icons-material";
 
 interface Properties {
@@ -48,15 +48,19 @@ export const ItemCount: React.FC<Properties> = ({ stock, initial, onAdd }) => {
         </CardContent>
       </CardActionArea>
       <CardActions sx={{ display: "flex", justifyContent: "right" }}>
-        <Button size="small" variant="contained" color="primary" onClick={() => handleCantChange(itemCant - 1)}>
-          -
-        </Button>
-        <Typography variant="h6" component="h6">
-          {itemCant}
-        </Typography>
-        <Button size="small" variant="contained" color="primary" onClick={() => handleCantChange(itemCant + 1)}>
-          +
-        </Button>
+        <ButtonGroup variant="contained" aria-label="outlined primary button group">
+          <Tooltip title="Remove Item" placement="top" arrow>
+            <Button size="small" color="primary" onClick={() => handleCantChange(itemCant - 1)}>
+              -
+            </Button>
+          </Tooltip>
+          <Button>{itemCant}</Button>
+          <Tooltip title="Add Item" placement="top" arrow>
+            <Button size="small" color="primary" onClick={() => handleCantChange(itemCant + 1)}>
+              +
+            </Button>
+          </Tooltip>
+        </ButtonGroup>
       </CardActions>
     </Card>
   );
