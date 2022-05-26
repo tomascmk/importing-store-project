@@ -30,7 +30,7 @@ export const ItemCount: React.FC<Properties> = ({ stock, initial, onAdd }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345, textAlign: "left" }}>
+    <Card sx={{ maxWidth: 345, width: 345, textAlign: "left" }}>
       <CardActionArea>
         <CardMedia
           component="img"

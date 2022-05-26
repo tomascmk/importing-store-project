@@ -200,7 +200,7 @@ export const Navbar = () => {
   );
 
   return (
-    <div style={{ position: "static", height: "fit-content", marginBottom: 70 }}>
+    <div style={{ position: "fixed", height: "fit-content", zIndex: 1 }}>
       <div style={{ position: "sticky", top: 0 }}>
         <Box sx={{ display: "flex" }}>
           <AppBar position="fixed" open={drawerOpen}>
