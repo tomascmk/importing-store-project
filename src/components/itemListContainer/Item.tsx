@@ -81,11 +81,15 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
         position: 'relative',
       }}
     >
-      <Badge
-        sx={{ position: 'absolute', top: 20, right: 20, zIndex: 1 }}
-        badgeContent={discount ? `${discount}%` : ''}
-        color='warning'
-      />
+      {discount && discount > 0 ? (
+        <Badge
+          sx={{ position: 'absolute', top: 20, right: 20, zIndex: 1 }}
+          badgeContent={`${discount}%`}
+          color='warning'
+        />
+      ) : (
+        ''
+      )}
       <CardActionArea>
         <CardMedia
           component='img'
