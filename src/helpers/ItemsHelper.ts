@@ -1,9 +1,12 @@
 export class ItemsHelper {
   static getPriceToShow = (
-    price: number,
+    price: number | string,
     discount?: number
-  ): { price: number; decimals?: number } => {
+  ): { price: number | string; decimals?: number } => {
     let priceToShow: number;
+    if (typeof price === 'string') {
+      price = parseFloat(price);
+    }
     if (discount) {
       priceToShow = price - price * (discount / 100);
     } else {
@@ -12,7 +15,7 @@ export class ItemsHelper {
     const decimals =
       Number((priceToShow - Math.floor(priceToShow)).toFixed(2)) * 100;
     return {
-      price: Math.trunc(priceToShow),
+      price: isNaN(priceToShow) ? 'Consultar precio' : Math.trunc(priceToShow),
       decimals: decimals > 0 ? decimals : undefined,
     };
   };

@@ -4,6 +4,8 @@ import { Item } from './Item';
 import { ProductsSkeleton } from '../skeleton/ProductsSkeleton';
 import { useAsyncCall } from '../../hooks/UseAsyncCall';
 import { Item as ItemViewModel } from '../../models/ItemModel';
+import { getTodayDeals } from '../../services/ProductServices';
+import { ProductsDocs } from '../../models/amazonModels/TodayDealsModels';
 
 export const ItemListContainer: React.FC = (): JSX.Element => {
   const itemObj = [
@@ -45,12 +47,8 @@ export const ItemListContainer: React.FC = (): JSX.Element => {
     },
   ];
 
-  const loader = useAsyncCall(async (): Promise<ItemViewModel[]> => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(itemObj);
-      }, 5000);
-    });
+  const loader = useAsyncCall(async (): Promise<ProductsDocs[]> => {
+    return await getTodayDeals();
   }, []);
 
   const items = useMemo(
@@ -67,7 +65,7 @@ export const ItemListContainer: React.FC = (): JSX.Element => {
           columns={{ xs: 1, sm: 8, md: 12 }}
         >
           {items.map((item) => (
-            <Grid item xs={2} sm={4} md={4} key={item.id}>
+            <Grid item xs={2} sm={4} md={4} key={item.product_id}>
               <Item stock={5} initialStock={1} item={item} />
             </Grid>
           ))}

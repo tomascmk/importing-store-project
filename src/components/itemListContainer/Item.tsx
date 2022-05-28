@@ -13,16 +13,17 @@ import {
   Tooltip,
 } from '@mui/material';
 import { ItemsHelper } from '../../helpers/ItemsHelper';
-import { Item as ItemViewModel } from '../../models/ItemModel';
+import { ProductsDocs } from '../../models/amazonModels/TodayDealsModels';
 
 interface Properties {
   stock: number;
   initialStock: number;
-  item: ItemViewModel;
+  item: ProductsDocs;
 }
 
 export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
-  const { title, desc, imgUrl, price, discount } = item;
+  const discount = undefined;
+  const { product_title, product_main_image_url, original_price } = item;
   const [itemCant, setItemCant] = useState(initialStock);
 
   const canChangeCant = (cant: number): boolean => {
@@ -39,8 +40,11 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
     }
   };
   const getPrice = (): JSX.Element => {
-    const priceWithDiscount = ItemsHelper.getPriceToShow(price, discount);
-    const originalPrice = ItemsHelper.getPriceToShow(price);
+    const priceWithDiscount = ItemsHelper.getPriceToShow(
+      original_price,
+      discount
+    );
+    const originalPrice = ItemsHelper.getPriceToShow(original_price);
     return (
       <Box sx={{ display: 'flex' }}>
         <Typography
@@ -94,17 +98,17 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
         <CardMedia
           component='img'
           height='140'
-          image={imgUrl}
+          image={product_main_image_url}
           alt='green iguana'
         />
         <CardContent>
           {getPrice()}
-          <Typography gutterBottom variant='h6' component='div'>
-            {title}
+          <Typography gutterBottom variant='h6' component='div' noWrap>
+            {product_title}
           </Typography>
-          <Typography variant='body2' color='text.secondary'>
+          {/* <Typography variant='body2' color='text.secondary'>
             {desc}
-          </Typography>
+          </Typography> */}
         </CardContent>
       </CardActionArea>
       <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
