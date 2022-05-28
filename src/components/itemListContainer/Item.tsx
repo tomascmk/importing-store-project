@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { ItemsHelper } from '../../helpers/ItemsHelper';
 import { ProductsDocs } from '../../models/amazonModels/TodayDealsModels';
+import { Link } from 'react-router-dom';
 
 interface Properties {
   stock: number;
@@ -44,7 +45,11 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
       original_price,
       discount
     );
-    const originalPrice = ItemsHelper.getPriceToShow(original_price);
+    let originalPrice = ItemsHelper.getPriceToShow(original_price);
+    originalPrice.price =
+      typeof originalPrice.price === 'string'
+        ? originalPrice.price
+        : `${originalPrice.price}`;
     return (
       <Box sx={{ display: 'flex' }}>
         <Typography
@@ -53,7 +58,7 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
           variant='h5'
           component='div'
         >
-          ${priceWithDiscount.price ?? originalPrice.price}
+          {priceWithDiscount.price ?? originalPrice.price}
           <Typography gutterBottom variant='body2' component='div'>
             {priceWithDiscount.decimals ?? originalPrice.decimals}
           </Typography>
@@ -94,49 +99,60 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
       ) : (
         ''
       )}
-      <CardActionArea>
-        <CardMedia
-          component='img'
-          height='140'
-          image={product_main_image_url}
-          alt='green iguana'
-        />
-        <CardContent>
-          {getPrice()}
-          <Typography gutterBottom variant='h6' component='div' noWrap>
-            {product_title}
-          </Typography>
-          {/* <Typography variant='body2' color='text.secondary'>
+      <Link
+        to={`/product?productId=${item.product_id}`}
+        style={{ textDecoration: 'none', color: 'inherit' }}
+      >
+        <CardActionArea>
+          <CardMedia
+            component='img'
+            height='140'
+            image={product_main_image_url}
+            alt='green iguana'
+          />
+          <CardContent>
+            {getPrice()}
+            <Typography
+              gutterBottom
+              variant='h6'
+              component='div'
+              sx={{ fontWeight: 'bold' }}
+              noWrap
+            >
+              {product_title}
+            </Typography>
+            {/* <Typography variant='body2' color='text.secondary'>
             {desc}
           </Typography> */}
-        </CardContent>
-      </CardActionArea>
-      <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
-        <ButtonGroup
-          variant='contained'
-          aria-label='outlined primary button group'
-        >
-          <Tooltip title='Remove Item' placement='top' arrow>
-            <Button
-              size='small'
-              color='primary'
-              onClick={() => handleCantChange(itemCant - 1)}
-            >
-              -
-            </Button>
-          </Tooltip>
-          <Button>{itemCant}</Button>
-          <Tooltip title='Add Item' placement='top' arrow>
-            <Button
-              size='small'
-              color='primary'
-              onClick={() => handleCantChange(itemCant + 1)}
-            >
-              +
-            </Button>
-          </Tooltip>
-        </ButtonGroup>
-      </CardActions>
+          </CardContent>
+        </CardActionArea>
+        {/* <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
+          <ButtonGroup
+            variant='contained'
+            aria-label='outlined primary button group'
+          >
+            <Tooltip title='Remove Item' placement='top' arrow>
+              <Button
+                size='small'
+                color='primary'
+                onClick={() => handleCantChange(itemCant - 1)}
+              >
+                -
+              </Button>
+            </Tooltip>
+            <Button>{itemCant}</Button>
+            <Tooltip title='Add Item' placement='top' arrow>
+              <Button
+                size='small'
+                color='primary'
+                onClick={() => handleCantChange(itemCant + 1)}
+              >
+                +
+              </Button>
+            </Tooltip>
+          </ButtonGroup>
+        </CardActions> */}
+      </Link>
     </Card>
   );
 };
