@@ -5,10 +5,23 @@ import { ProductsSkeleton } from '../skeleton/ProductsSkeleton';
 import { useAsyncCall } from '../../hooks/UseAsyncCall';
 import { getTodayDeals } from '../../services/ProductServices';
 import { ProductsDocs } from '../../models/amazonModels/TodayDealsModels';
+import { Dasboard } from '../../enums/Dashboard';
 
-export const ItemListContainer: React.FC = (): JSX.Element => {
+interface Properties {
+  dashboard: Dasboard;
+}
+
+export const ItemListContainer: React.FC<Properties> = ({
+  dashboard,
+}): JSX.Element => {
   const loader = useAsyncCall(async (): Promise<ProductsDocs[]> => {
-    return await getTodayDeals();
+    switch (dashboard) {
+      case Dasboard.Deals:
+        return await getTodayDeals();
+
+      default:
+        return await getTodayDeals();
+    }
   }, []);
 
   const items = useMemo(

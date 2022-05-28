@@ -46,12 +46,14 @@ export const NavbarMenu = () => {
             <ListItemText primary={'Favoritos'} />
           </ListItemButton>
         </ListItem>
-        <ListItem key={'ofertas'} disablePadding>
-          <ListItemButton>
-            <ListItemIcon>{<DiscountRounded />}</ListItemIcon>
-            <ListItemText primary={'Ofertas'} />
-          </ListItemButton>
-        </ListItem>
+        <Link className='navbar-link' to='/deals'>
+          <ListItem key={'ofertas'} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>{<DiscountRounded />}</ListItemIcon>
+              <ListItemText primary={'Ofertas'} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
         <ListItem key={'historial'} disablePadding>
           <ListItemButton>
             <ListItemIcon>{<HistoryRounded />}</ListItemIcon>
