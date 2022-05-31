@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ProductsPage } from './pages/ProductsPage';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
 import { Dasboard } from './enums/Dashboard';
+import { ProductPage } from './pages/ProductPage';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
               path='/deals'
               element={<ProductsPage dashboard={Dasboard.Deals} />}
             />
-            <Route path='/product' element={<h1>Producto</h1>} />
+            <Route path='/product/:productId' element={<ProductPage />} />
             <Route path='*' element={<h1>404</h1>} />
           </Routes>
         </Layout>

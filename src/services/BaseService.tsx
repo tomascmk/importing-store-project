@@ -53,7 +53,7 @@ const getResponse = async <ResT, ReqT>(
   switch (appType) {
     case AppType.Amazon:
       /* fullUrl = `${ConfigurationService.AppSettings.RapidapiAmazonUrl}/api${relativeUrl}`; */
-      fullUrl = `https://amazon24.p.rapidapi.com/api${relativeUrl}`;
+      fullUrl = `https://amazon24.p.rapidapi.com/${relativeUrl}`;
       if (!axiosRequestConfig.headers) {
         axiosRequestConfig.headers = {};
       }
@@ -65,7 +65,7 @@ const getResponse = async <ResT, ReqT>(
         'b7272af9famsh466d37df6493dedp13eaabjsnfeddc25dada0';
       break;
     default:
-      fullUrl = `https://amazon24.p.rapidapi.com/api/api${relativeUrl}`;
+      fullUrl = `https://amazon24.p.rapidapi.com/${relativeUrl}`;
     /* default:
       fullUrl = `${ConfigurationService.AppSettings.RapidapiAmazonUrl}/api${relativeUrl}`; */
   }

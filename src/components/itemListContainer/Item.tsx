@@ -100,7 +100,7 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
         ''
       )}
       <Link
-        to={`/product?productId=${item.product_id}`}
+        to={`/product/${item.product_id}`}
         style={{ textDecoration: 'none', color: 'inherit' }}
       >
         <CardActionArea>
