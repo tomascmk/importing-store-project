@@ -30,13 +30,13 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
 
   const handleAddItem = (cant: number): void => {
     if (cant <= stock) {
-      setItemCant(itemCant - 1);
+      setItemCant(itemCant + 1);
     }
   };
 
   const handleRemoveItem = (cant: number): void => {
     if (cant >= 1) {
-      setItemCant(itemCant + 1);
+      setItemCant(itemCant - 1);
     }
   };
 

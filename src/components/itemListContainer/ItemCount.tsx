@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ButtonGroup, Tooltip, Button } from '@mui/material';
 
 interface Properties {
@@ -12,19 +12,62 @@ export const ItemCount: React.FC<Properties> = ({
   onAdd,
   onRemove,
 }) => {
+  const [finalizehPurchase, setFinalizePurchase] = useState(false);
+
+  const onAddToCart = () => {
+    setFinalizePurchase(true);
+  };
   return (
-    <ButtonGroup variant='contained' aria-label='outlined primary button group'>
-      <Tooltip title='Remove Item' placement='top' arrow>
-        <Button size='small' color='primary' onClick={() => onRemove(itemCant)}>
-          -
-        </Button>
-      </Tooltip>
-      <Button>{itemCant}</Button>
-      <Tooltip title='Add Item' placement='top' arrow>
-        <Button size='small' color='primary' onClick={() => onAdd(itemCant)}>
-          +
-        </Button>
-      </Tooltip>
-    </ButtonGroup>
+    <>
+      {finalizehPurchase ? (
+        <Tooltip title='Finalize Purchase' placement='top' arrow>
+          <Button
+            size='small'
+            variant='contained'
+            color='primary'
+            onClick={onAddToCart}
+          >
+            Finalize purchase
+          </Button>
+        </Tooltip>
+      ) : (
+        <div>
+          <ButtonGroup
+            variant='text'
+            aria-label='outlined primary button group'
+          >
+            <Tooltip title='Remove Item' placement='top' arrow>
+              <Button
+                size='small'
+                color='primary'
+                onClick={() => onRemove(itemCant)}
+              >
+                -
+              </Button>
+            </Tooltip>
+            <Button>{itemCant}</Button>
+            <Tooltip title='Add Item' placement='top' arrow>
+              <Button
+                size='small'
+                color='primary'
+                onClick={() => onAdd(itemCant)}
+              >
+                +
+              </Button>
+            </Tooltip>
+          </ButtonGroup>
+          <Tooltip title='Add To Cart' placement='top' arrow>
+            <Button
+              size='small'
+              variant='contained'
+              color='primary'
+              onClick={onAddToCart}
+            >
+              Add to cart
+            </Button>
+          </Tooltip>
+        </div>
+      )}
+    </>
   );
 };
