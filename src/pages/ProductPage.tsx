@@ -17,10 +17,25 @@ import { useAsyncCall } from '../hooks/UseAsyncCall';
 import { getProductById } from '../services/ProductServices';
 import './ProductPage.scss';
 import { ProductImagePopup } from '../components/popup/ProductImagePopup';
+import { ItemCount } from '../components/itemListContainer/ItemCount';
 
 export const ProductPage = () => {
   const { productId } = useParams();
   const [canShowProductPopup, setCanShowProductPopup] = useState(false);
+  const [itemCant, setItemCant] = useState(0);
+
+  const handleAddItem = (cant: number): void => {
+    if (cant <= 5) {
+      setItemCant(itemCant + 1);
+    }
+  };
+
+  const handleRemoveItem = (cant: number): void => {
+    if (cant >= 1) {
+      setItemCant(itemCant - 1);
+    }
+  };
+
   const loader = useAsyncCall(async () => {
     if (productId) {
       return await getProductById(productId);
@@ -98,15 +113,11 @@ export const ProductPage = () => {
               </Typography>
             </div>
             <Stack spacing={2} direction='row'>
-              <Button variant='outlined'>Add to cart</Button>
-              <Button
-                variant='contained'
-                onClick={() =>
-                  (window.location.href = productData.product_detail_url)
-                }
-              >
-                Buy now
-              </Button>
+              <ItemCount
+                itemCant={itemCant}
+                onAdd={handleAddItem}
+                onRemove={handleRemoveItem}
+              />
             </Stack>
           </Grid>
         </Grid>

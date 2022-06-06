@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ButtonGroup, Tooltip, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 interface Properties {
   itemCant: number;
@@ -21,14 +22,19 @@ export const ItemCount: React.FC<Properties> = ({
     <>
       {finalizehPurchase ? (
         <Tooltip title='Finalize Purchase' placement='top' arrow>
-          <Button
-            size='small'
-            variant='contained'
-            color='primary'
-            onClick={onAddToCart}
+          <Link
+            to={`/cart`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            Finalize purchase
-          </Button>
+            <Button
+              size='small'
+              variant='contained'
+              color='primary'
+              onClick={onAddToCart}
+            >
+              Finalize purchase
+            </Button>
+          </Link>
         </Tooltip>
       ) : (
         <div>
