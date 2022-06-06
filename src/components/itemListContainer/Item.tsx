@@ -15,6 +15,7 @@ import {
 import { ItemsHelper } from '../../helpers/ItemsHelper';
 import { ProductsDocs } from '../../models/amazonModels/TodayDealsModels';
 import { Link } from 'react-router-dom';
+import { ItemCount } from './ItemCount';
 
 interface Properties {
   stock: number;
@@ -27,19 +28,18 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
   const { product_title, product_main_image_url, original_price } = item;
   const [itemCant, setItemCant] = useState(initialStock);
 
-  const canChangeCant = (cant: number): boolean => {
-    if (cant >= 1 && cant <= stock) {
-      return true;
-    }
-
-    return false;
-  };
-
-  const handleCantChange = (cant: number): void => {
-    if (canChangeCant(cant)) {
-      setItemCant(cant);
+  const handleAddItem = (cant: number): void => {
+    if (cant <= stock) {
+      setItemCant(itemCant - 1);
     }
   };
+
+  const handleRemoveItem = (cant: number): void => {
+    if (cant >= 1) {
+      setItemCant(itemCant + 1);
+    }
+  };
+
   const getPrice = (): JSX.Element => {
     const priceWithDiscount = ItemsHelper.getPriceToShow(
       original_price,
@@ -99,11 +99,11 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
       ) : (
         ''
       )}
-      <Link
-        to={`/product/${item.product_id}`}
-        style={{ textDecoration: 'none', color: 'inherit' }}
-      >
-        <CardActionArea>
+      <CardActionArea>
+        <Link
+          to={`/product/${item.product_id}`}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
           <CardMedia
             component='img'
             height='140'
@@ -125,34 +125,15 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
             {desc}
           </Typography> */}
           </CardContent>
-        </CardActionArea>
-        {/* <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
-          <ButtonGroup
-            variant='contained'
-            aria-label='outlined primary button group'
-          >
-            <Tooltip title='Remove Item' placement='top' arrow>
-              <Button
-                size='small'
-                color='primary'
-                onClick={() => handleCantChange(itemCant - 1)}
-              >
-                -
-              </Button>
-            </Tooltip>
-            <Button>{itemCant}</Button>
-            <Tooltip title='Add Item' placement='top' arrow>
-              <Button
-                size='small'
-                color='primary'
-                onClick={() => handleCantChange(itemCant + 1)}
-              >
-                +
-              </Button>
-            </Tooltip>
-          </ButtonGroup>
-        </CardActions> */}
-      </Link>
+        </Link>
+      </CardActionArea>
+      <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
+        <ItemCount
+          itemCant={itemCant}
+          onAdd={handleAddItem}
+          onRemove={handleRemoveItem}
+        />
+      </CardActions>
     </Card>
   );
 };

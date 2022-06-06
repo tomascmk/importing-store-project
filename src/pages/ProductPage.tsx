@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   Button,
   Card,
@@ -16,9 +16,11 @@ import { Link, useParams } from 'react-router-dom';
 import { useAsyncCall } from '../hooks/UseAsyncCall';
 import { getProductById } from '../services/ProductServices';
 import './ProductPage.scss';
+import { ProductImagePopup } from '../components/popup/ProductImagePopup';
 
 export const ProductPage = () => {
   const { productId } = useParams();
+  const [canShowProductPopup, setCanShowProductPopup] = useState(false);
   const loader = useAsyncCall(async () => {
     if (productId) {
       return await getProductById(productId);
@@ -69,6 +71,7 @@ export const ProductPage = () => {
                   sx={{ width: '100%' }}
                   image={productData.product_main_image_url}
                   alt={productData.product_main_image_url}
+                  onClick={() => setCanShowProductPopup(true)}
                 />
               </CardActionArea>
             </Card>
@@ -102,7 +105,7 @@ export const ProductPage = () => {
                   (window.location.href = productData.product_detail_url)
                 }
               >
-                Buy
+                Buy now
               </Button>
             </Stack>
           </Grid>
@@ -146,6 +149,13 @@ export const ProductPage = () => {
             <Skeleton variant='text' width='80%' />
           </Grid>
         </Grid>
+      )}
+      {productData && (
+        <ProductImagePopup
+          canShow={canShowProductPopup}
+          imgUrl={productData.product_main_image_url}
+          onClose={() => setCanShowProductPopup(false)}
+        />
       )}
     </Container>
   );
