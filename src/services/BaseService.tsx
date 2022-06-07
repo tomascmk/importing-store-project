@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { ConfigurationService } from './ConfigurationService';
 import { ApiDataResponse, ApiErrorResponse, ApiResponse } from './ApiResponses';
-import { ApplicationId } from '../enums/ApplicationId';
 import { AppType } from '../enums/AppType';
 
 export enum HttpMethod {

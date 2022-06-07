@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import {
-  Button,
   Card,
   CardActionArea,
   CardMedia,
@@ -12,7 +11,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAsyncCall } from '../hooks/UseAsyncCall';
 import { getProductById } from '../services/ProductServices';
 import './ProductPage.scss';

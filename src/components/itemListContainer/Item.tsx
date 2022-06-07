@@ -3,15 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import {
-  Badge,
-  Box,
-  Button,
-  ButtonGroup,
-  CardActionArea,
-  CardActions,
-  Tooltip,
-} from '@mui/material';
+import { Badge, Box, CardActionArea, CardActions } from '@mui/material';
 import { ItemsHelper } from '../../helpers/ItemsHelper';
 import { ProductsDocs } from '../../models/amazonModels/TodayDealsModels';
 import { Link } from 'react-router-dom';
@@ -106,7 +98,7 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
         >
           <CardMedia
             component='img'
-            height='140'
+            height='200'
             image={product_main_image_url}
             alt='green iguana'
           />
