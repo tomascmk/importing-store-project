@@ -4,7 +4,7 @@ import { Item } from './Item';
 import { ProductsSkeleton } from '../skeleton/ProductsSkeleton';
 import { useAsyncCall } from '../../hooks/UseAsyncCall';
 import { getTodayDeals } from '../../services/ProductServices';
-import { ProductsDocs } from '../../models/amazonModels/TodayDealsModels';
+import { ProductDocs } from '../../models/amazonModels/TodayDealsModels';
 import { Dasboard } from '../../enums/Dashboard';
 
 interface Properties {
@@ -14,7 +14,7 @@ interface Properties {
 export const ItemListContainer: React.FC<Properties> = ({
   dashboard,
 }): JSX.Element => {
-  const loader = useAsyncCall(async (): Promise<ProductsDocs[]> => {
+  const loader = useAsyncCall(async (): Promise<ProductDocs[]> => {
     switch (dashboard) {
       case Dasboard.Deals:
         return await getTodayDeals();
@@ -39,7 +39,7 @@ export const ItemListContainer: React.FC<Properties> = ({
         >
           {items.map((item) => (
             <Grid item xs={2} sm={4} md={4} key={item.product_id}>
-              <Item stock={5} initialStock={1} item={item} />
+              <Item item={item} />
             </Grid>
           ))}
         </Grid>

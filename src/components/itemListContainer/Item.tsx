@@ -1,35 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Badge, Box, CardActionArea, CardActions } from '@mui/material';
 import { ItemsHelper } from '../../helpers/ItemsHelper';
-import { ProductsDocs } from '../../models/amazonModels/TodayDealsModels';
+import { ProductDocs } from '../../models/amazonModels/TodayDealsModels';
 import { Link } from 'react-router-dom';
 import { ItemCount } from './ItemCount';
+import { CartContext } from '../../context/CartContext';
 
 interface Properties {
-  stock: number;
-  initialStock: number;
-  item: ProductsDocs;
+  item: ProductDocs;
 }
 
-export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
+export const Item: React.FC<Properties> = ({ item }) => {
+  const { onAddItemToCart } = useContext(CartContext);
   const discount = undefined;
-  const { product_title, product_main_image_url, original_price } = item;
-  const [itemCant, setItemCant] = useState(initialStock);
+  const { product_title, product_main_image_url, original_price, product_id } =
+    item;
 
-  const handleAddItem = (cant: number): void => {
-    if (cant <= stock) {
-      setItemCant(itemCant + 1);
-    }
-  };
-
-  const handleRemoveItem = (cant: number): void => {
-    if (cant >= 1) {
-      setItemCant(itemCant - 1);
-    }
+  const handleAddItem = (): void => {
+    onAddItemToCart(item);
   };
 
   const getPrice = (): JSX.Element => {
@@ -120,11 +112,7 @@ export const Item: React.FC<Properties> = ({ stock, initialStock, item }) => {
         </Link>
       </CardActionArea>
       <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
-        <ItemCount
-          itemCant={itemCant}
-          onAdd={handleAddItem}
-          onRemove={handleRemoveItem}
-        />
+        <ItemCount onAddToCart={handleAddItem} />
       </CardActions>
     </Card>
   );

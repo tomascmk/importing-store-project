@@ -1,12 +1,12 @@
 import { AppType } from '../enums/AppType';
 import { apiGet } from './BaseService';
 import {
-  ProductsDocs,
+  ProductDocs,
   TodayDealsModels,
 } from '../models/amazonModels/TodayDealsModels';
 import { ProductModel } from '../models/amazonModels/PorductModel';
 
-export const getTodayDeals = async (): Promise<ProductsDocs[]> => {
+export const getTodayDeals = async (): Promise<ProductDocs[]> => {
   try {
     const url = `api/todaydeals?country=US`;
     const response = await apiGet<TodayDealsModels>(url, AppType.Amazon);

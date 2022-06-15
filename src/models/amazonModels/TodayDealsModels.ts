@@ -1,4 +1,4 @@
-export interface ProductsDocs {
+export interface ProductDocs {
   app_sale_price: string;
   app_sale_price_currency: string;
   app_sale_range: { min: number; max: number; currency: string };
@@ -13,5 +13,5 @@ export interface ProductsDocs {
 
 export interface TodayDealsModels {
   deal_docs: any[];
-  products_docs: ProductsDocs[];
+  products_docs: ProductDocs[];
 }

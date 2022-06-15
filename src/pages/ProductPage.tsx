@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import {
   Card,
   CardActionArea,
@@ -17,23 +17,12 @@ import { getProductById } from '../services/ProductServices';
 import './ProductPage.scss';
 import { ProductImagePopup } from '../components/popup/ProductImagePopup';
 import { ItemCount } from '../components/itemListContainer/ItemCount';
+import { CartContext } from '../context/CartContext';
 
 export const ProductPage = () => {
+  const { onAddItemToCart } = useContext(CartContext);
   const { productId } = useParams();
   const [canShowProductPopup, setCanShowProductPopup] = useState(false);
-  const [itemCant, setItemCant] = useState(0);
-
-  const handleAddItem = (cant: number): void => {
-    if (cant <= 5) {
-      setItemCant(itemCant + 1);
-    }
-  };
-
-  const handleRemoveItem = (cant: number): void => {
-    if (cant >= 1) {
-      setItemCant(itemCant - 1);
-    }
-  };
 
   const loader = useAsyncCall(async () => {
     if (productId) {
@@ -46,6 +35,12 @@ export const ProductPage = () => {
     () => (loader.completed ? loader.result : undefined),
     [loader]
   );
+
+  const handleAddItem = (): void => {
+    if (productData) {
+      /* onAddItemToCart(productData); */
+    }
+  };
 
   return (
     <Container className='product__container'>
@@ -112,11 +107,7 @@ export const ProductPage = () => {
               </Typography>
             </div>
             <Stack spacing={2} direction='row'>
-              <ItemCount
-                itemCant={itemCant}
-                onAdd={handleAddItem}
-                onRemove={handleRemoveItem}
-              />
+              <ItemCount onAddToCart={handleAddItem} />
             </Stack>
           </Grid>
         </Grid>
