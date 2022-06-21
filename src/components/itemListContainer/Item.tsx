@@ -9,6 +9,7 @@ import { ProductDocs } from '../../models/amazonModels/TodayDealsModels';
 import { Link } from 'react-router-dom';
 import { ItemCount } from './ItemCount';
 import { CartContext } from '../../context/CartContext';
+import { AppLink } from '../utils/AppLink';
 
 interface Properties {
   item: ProductDocs;
@@ -84,10 +85,7 @@ export const Item: React.FC<Properties> = ({ item }) => {
         ''
       )}
       <CardActionArea>
-        <Link
-          to={`/product/${item.product_id}`}
-          style={{ textDecoration: 'none', color: 'inherit' }}
-        >
+        <AppLink to={`/product/${item.product_id}`}>
           <CardMedia
             component='img'
             height='200'
@@ -109,7 +107,7 @@ export const Item: React.FC<Properties> = ({ item }) => {
             {desc}
           </Typography> */}
           </CardContent>
-        </Link>
+        </AppLink>
       </CardActionArea>
       <CardActions sx={{ display: 'flex', justifyContent: 'right' }}>
         <ItemCount onAddToCart={handleAddItem} />

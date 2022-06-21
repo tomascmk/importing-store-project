@@ -6,6 +6,7 @@ import ScrollToTop from './components/scrollToTop/ScrollToTop';
 import { Dasboard } from './enums/Dashboard';
 import { ProductPage } from './pages/ProductPage';
 import { CartContextProvider } from './context/CartContext';
+import { CartView } from './components/cartView/CartView';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 path='/deals'
                 element={<ProductsPage dashboard={Dasboard.Deals} />}
               />
+              <Route path='/cart' element={<CartView />} />
               <Route path='/product/:productId' element={<ProductPage />} />
               <Route path='*' element={<h1>404</h1>} />
             </Routes>

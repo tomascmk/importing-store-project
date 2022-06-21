@@ -20,19 +20,20 @@ import {
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import './navbar.scss';
+import { AppLink } from '../utils/AppLink';
 
 export const NavbarMenu = () => {
   return (
     <>
       <List>
-        <Link className='navbar-link' to='/'>
+        <AppLink to='/'>
           <ListItem key={'inicio'} disablePadding>
             <ListItemButton>
               <ListItemIcon>{<HomeRounded />}</ListItemIcon>
               <ListItemText primary={'Inicio'} />
             </ListItemButton>
           </ListItem>
-        </Link>
+        </AppLink>
         <ListItem key={'miscompras'} disablePadding>
           <ListItemButton>
             <ListItemIcon>{<ShoppingBasketRounded />}</ListItemIcon>
@@ -45,14 +46,14 @@ export const NavbarMenu = () => {
             <ListItemText primary={'Favoritos'} />
           </ListItemButton>
         </ListItem>
-        <Link className='navbar-link' to='/deals'>
+        <AppLink to='/deals'>
           <ListItem key={'ofertas'} disablePadding>
             <ListItemButton>
               <ListItemIcon>{<DiscountRounded />}</ListItemIcon>
               <ListItemText primary={'Ofertas'} />
             </ListItemButton>
           </ListItem>
-        </Link>
+        </AppLink>
         <ListItem key={'historial'} disablePadding>
           <ListItemButton>
             <ListItemIcon>{<HistoryRounded />}</ListItemIcon>

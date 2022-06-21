@@ -1,3 +1,5 @@
+import { ProductDocs } from '../models/amazonModels/TodayDealsModels';
+
 export class ItemsHelper {
   static getPriceToShow = (
     price: number | string,
@@ -19,4 +21,6 @@ export class ItemsHelper {
       decimals: decimals > 0 ? decimals : undefined,
     };
   };
+
+  static getItemPrice = (item: ProductDocs) => {};
 }
