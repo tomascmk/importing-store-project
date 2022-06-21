@@ -5,6 +5,7 @@ export interface CartContextValue {
   cartItems?: ProductDocs[];
   cartSavedItems?: ProductDocs[];
   cartItemsNumber: number;
+  cartSavedItemsNumber: number;
   cartTotal: number;
   onAddItemToCart(newItem: ProductDocs): void;
   onRemoveItemFromCart(itemId: string): void;
@@ -20,11 +21,22 @@ export const CartContextProvider: React.FC<Props> = ({ children, item }) => {
   const [cartItems, setCartItems] = useState<ProductDocs[]>([]);
   const [cartSavedItems, setCartSavedItems] = useState<ProductDocs[]>([]);
 
+  const onRemoveSavedItem = useCallback(
+    (itemId: string) => {
+      const newItems = cartSavedItems.filter(
+        (item) => item.product_id !== itemId
+      );
+      setCartSavedItems(newItems);
+    },
+    [cartSavedItems]
+  );
+
   const onAddItemToCart = useCallback(
     (newItem: ProductDocs) => {
+      onRemoveSavedItem(newItem.product_id);
       setCartItems([...cartItems, newItem]);
     },
-    [cartItems]
+    [cartItems, onRemoveSavedItem]
   );
 
   const onRemoveItemFromCart = useCallback(
@@ -39,25 +51,20 @@ export const CartContextProvider: React.FC<Props> = ({ children, item }) => {
     (itemId: string) => {
       const newItem = cartItems.find((item) => item.product_id === itemId);
       if (newItem) {
+        onRemoveItemFromCart(itemId);
         setCartSavedItems([...cartSavedItems, newItem]);
       }
     },
-    [cartItems, cartSavedItems]
-  );
-
-  const onRemoveSavedItem = useCallback(
-    (itemId: string) => {
-      const newItems = cartSavedItems.filter(
-        (item) => item.product_id !== itemId
-      );
-      setCartSavedItems(newItems);
-    },
-    [cartSavedItems]
+    [cartItems, cartSavedItems, onRemoveItemFromCart]
   );
 
   const cartItemsNumber = useMemo<number>(() => {
     return cartItems?.length ?? 0;
   }, [cartItems]);
+
+  const cartSavedItemsNumber = useMemo<number>(() => {
+    return cartSavedItems?.length ?? 0;
+  }, [cartSavedItems]);
 
   const cartTotal = useMemo<number>(() => {
     if (!cartItems.length) {
@@ -74,6 +81,7 @@ export const CartContextProvider: React.FC<Props> = ({ children, item }) => {
       ({
         cartItems,
         cartItemsNumber,
+        cartSavedItemsNumber,
         cartSavedItems,
         cartTotal,
         onAddItemToCart,
@@ -85,6 +93,7 @@ export const CartContextProvider: React.FC<Props> = ({ children, item }) => {
       cartItems,
       cartItemsNumber,
       cartSavedItems,
+      cartSavedItemsNumber,
       cartTotal,
       onAddItemToCart,
       onAddSavedItem,

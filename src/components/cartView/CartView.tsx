@@ -40,7 +40,10 @@ function a11yProps(index: number) {
 export const CartView = () => {
   const {
     cartItems,
+    cartItemsNumber,
+    cartSavedItemsNumber,
     cartSavedItems,
+    onAddItemToCart,
     onAddSavedItem,
     onRemoveItemFromCart,
     onRemoveSavedItem,
@@ -59,8 +62,11 @@ export const CartView = () => {
             onChange={handleChange}
             aria-label='basic tabs example'
           >
-            <Tab label='Carrito' {...a11yProps(0)} />
-            <Tab label='Guardados' {...a11yProps(1)} />
+            <Tab label={`Carrito (${cartItemsNumber})`} {...a11yProps(0)} />
+            <Tab
+              label={`Guardados (${cartSavedItemsNumber})`}
+              {...a11yProps(1)}
+            />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
@@ -82,7 +88,7 @@ export const CartView = () => {
             <Grid item xs={12}>
               <CartList
                 items={cartSavedItems}
-                onItemSaved={onAddSavedItem}
+                onAddItemToCart={onAddItemToCart}
                 onRemoveItem={onRemoveSavedItem}
               />
             </Grid>

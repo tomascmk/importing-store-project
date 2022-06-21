@@ -15,15 +15,24 @@ import { AppLink } from '../utils/AppLink';
 interface Properties {
   items?: ProductDocs[];
   onRemoveItem(itemId: string): void;
+  onAddItemToCart?(item: ProductDocs): void;
   onItemSaved?(itemId: string): void;
 }
 
 export const CartList: React.FC<Properties> = ({
   items,
   onRemoveItem,
+  onAddItemToCart,
   onItemSaved,
 }) => {
   const renderItems = (): JSX.Element => {
+    const handleAddItemToCart = (itemId: string) => {
+      const itemToAdd = items?.find((item) => item.product_id === itemId);
+      if (onAddItemToCart && itemToAdd) {
+        onAddItemToCart(itemToAdd);
+      }
+    };
+
     return (
       <>
         {items && items?.length > 0 ? (
@@ -72,6 +81,9 @@ export const CartList: React.FC<Properties> = ({
                           itemId={item.product_id}
                           onRemoveItem={onRemoveItem}
                           onItemSaved={onItemSaved}
+                          onAddItemToCart={
+                            onAddItemToCart ? handleAddItemToCart : undefined
+                          }
                         />
                       </>
                     }
